@@ -1,0 +1,224 @@
+/* ---------- Design tokens: change these first ---------- */
+:root {
+  --color-bg: #d8dee9;
+  --color-card: #eceff4;
+  --color-panel: #2e3440;      /* photo panel + buttons */
+  --color-accent: #5e81ac;     /* stripe, rule, photo ring */
+  --color-text: #2e3440;
+  --color-muted: #4c566a;
+  --color-line: #d8dee9;
+  --color-on-panel: #eceff4;
+
+  --font-name: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --radius-card: 14px;
+  --radius-button: 8px;
+  --photo-size: 120px;
+  --panel-height: 140px;       /* mobile panel height */
+  --card-width: 380px;         /* mobile max width */
+  --card-width-wide: 700px;    /* desktop width */
+  --space: 1.5rem;
+}
+
+/* ---------- Base (mobile first) ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+/* ---------- Card ---------- */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--card-width);
+  overflow: hidden;
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  box-shadow: 0 2px 4px rgba(46, 52, 64, 0.08), 0 18px 40px rgba(46, 52, 64, 0.18);
+}
+
+/* Photo panel */
+.card__side {
+  position: relative;
+  height: var(--panel-height);
+  background:
+    linear-gradient(135deg, transparent 55%, rgba(255, 255, 255, 0.06) 55%),
+    var(--color-panel);
+  border-bottom: 4px solid var(--color-accent);
+}
+
+.card__photo {
+  position: absolute;
+  left: var(--space);
+  bottom: calc(var(--photo-size) / -2);
+  width: var(--photo-size);
+  height: var(--photo-size);
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 0px;
+  border: 4px solid var(--color-card);
+  box-shadow: 0 0 0 2px var(--color-accent);
+  background: var(--color-card);
+}
+
+/* Text area */
+.card__body {
+  padding: calc(var(--photo-size) / 2 + 1rem) var(--space) var(--space);
+}
+
+.card__name {
+  margin: 0;
+  font-family: var(--font-name);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.card__title {
+  margin: 0.4rem 0 0;
+  color: var(--color-muted);
+}
+
+/* Details */
+.card__details {
+  margin: 1.25rem 0 1.5rem;
+  padding: 0;
+  border-top: 2px solid var(--color-accent);
+}
+
+.card__row {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  align-items: baseline;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.card__row dt {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.card__row dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Buttons */
+.card__actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn {
+  flex: 1;
+  padding: 0.8rem 0.75rem;
+  border: 2px solid var(--color-panel);
+  border-radius: var(--radius-button);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.btn--primary {
+  background: var(--color-panel);
+  color: var(--color-on-panel);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--color-panel);
+}
+
+.btn--primary:hover {
+  background: transparent;
+  color: var(--color-panel);
+}
+
+.btn--secondary:hover {
+  background: var(--color-panel);
+  color: var(--color-on-panel);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Very small phones: stack the buttons */
+@media (max-width: 340px) {
+  .card__actions {
+    flex-direction: column;
+  }
+}
+
+/* ---------- Desktop: landscape business card ---------- */
+@media (min-width: 720px) {
+  :root {
+    --photo-size: 150px;
+  }
+
+  body {
+    padding: 2rem;
+  }
+
+  .card {
+    flex-direction: row;
+    max-width: var(--card-width-wide);
+    min-height: 400px;
+  }
+
+  .card__side {
+    flex: 0 0 38%;
+    height: auto;
+    display: grid;
+    place-items: center;
+    border-bottom: 0;
+    border-right: 4px solid var(--color-accent);
+  }
+
+  .card__photo {
+    position: static;
+  }
+
+  .card__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.5rem;
+  }
+
+  .card__name {
+    font-size: 2.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}
